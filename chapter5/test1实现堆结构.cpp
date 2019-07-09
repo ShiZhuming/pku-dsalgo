@@ -5,7 +5,7 @@
 // 定义一个数组，初始化为空。在数组上执行两种操作：
 
 // 1、增添1个元素，把1个新的元素放入数组。
- 
+
 // 2、输出并删除数组中最小的数。
 
 // 使用堆结构实现上述功能的高效算法。
@@ -41,6 +41,7 @@
 // 需要使用最小堆结构来实现本题的算法
 
 #include <cstdio>
+#include <queue>
 using namespace std;
 
 #define MAXSIZE 100000 + 10
@@ -113,20 +114,12 @@ public:
         siftDown(0);
         return true;
     }
-    void printer(){
-        printf("tree structure : \n");
-        for(int i = 0; i < size; i++) printf("%d ",root[i]);
-        printf("tree end\n");
-    }
 };
 
 int main(){
-
-    freopen("_make.out","r",stdin);
-    freopen("_mine.out","w",stdout);
-
     int t, n, p, q;
-    minHeap<int> heap(MAXSIZE);
+    // minHeap<int> heap(MAXSIZE);
+    priority_queue<int,vector<int>,greater<int> > heap;
     scanf("%d",&t);
     while(t--){
         scanf("%d",&n);
@@ -138,14 +131,15 @@ int main(){
                 heap.push(q);
                 break;
                 case 2:
-                if(heap.pop(q))
-                    printf("%d\n",q);
+                // heap.pop(q);
+                q = heap.top();
+                heap.pop();
+                printf("%d\n",q);
                 break;
                 default:
                 ;
             }
         }
-        // heap.printer();//ceshi
     }
     return 0;
 }
