@@ -124,6 +124,7 @@ int main(){
     while(t--){
         scanf("%d",&n);
         while(n--){
+            while(!heap.empty()) heap.pop();
             scanf("%d",&p);
             switch(p){
                 case 1:

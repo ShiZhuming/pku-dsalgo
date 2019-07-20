@@ -67,9 +67,10 @@ public:
     }
     void clear(){
         if(!root) return;
-        delete [] root;
-        if(maxsize) root = new T [maxsize];
-        else root = NULL;
+        // delete [] root;
+        // if(maxsize) root = new T [maxsize];
+        // else root = NULL;
+        size = 0;
     }
     void siftUp(int pos){
         T temp = root[pos];
@@ -87,18 +88,29 @@ public:
     }
     void siftDown(int pos){
         T temp = root[pos];
-        if(leftchild(pos) < size && root[pos] > root[leftchild(pos)]){
+        if(rightchild(pos) < size){//有右子树
+            if(root[leftchild(pos)] < root[rightchild(pos)] && root[pos] > root[leftchild(pos)]){
+                temp = root[pos];
+                root[pos] = root[leftchild(pos)];
+                root[leftchild(pos)] = temp;
+                siftDown(leftchild(pos));
+            }
+            else if(root[leftchild(pos)] >= root[rightchild(pos)] && root[pos] > root[rightchild(pos)]){
+                temp = root[pos];
+                root[pos] = root[rightchild(pos)];
+                root[rightchild(pos)] = temp;
+                siftDown(rightchild(pos));
+            }
+            else return;
+        }
+        else if(leftchild(pos) < size && root[pos] > root[leftchild(pos)]){
             temp = root[pos];
             root[pos] = root[leftchild(pos)];
             root[leftchild(pos)] = temp;
             siftDown(leftchild(pos));
         }
-        if(rightchild(pos) < size && root[pos] > root[rightchild(pos)]){
-            temp = root[pos];
-            root[pos] = root[rightchild(pos)];
-            root[rightchild(pos)] = temp;
-            siftDown(rightchild(pos));
-        }
+        else return;
+        
     }
     bool push(const T & ele){
         if(!root || size == maxsize) return false;
@@ -130,6 +142,7 @@ int main(){
     scanf("%d",&t);
     while(t--){
         scanf("%d",&n);
+        heap.clear();
         while(n--){
             scanf("%d",&p);
             switch(p){
