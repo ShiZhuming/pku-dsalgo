@@ -3,3 +3,4 @@ test*
 example*
 cmp.cpp
 make.cpp
+.vscode/
